@@ -4,7 +4,8 @@
 #define NEW(type, ...)                                                         \
   ({                                                                           \
     type _val;                                                                 \
-    init_##type(&_val, __VA_ARGS__) _val;                                      \
+    init_##type(&_val, __VA_ARGS__);                                           \
+    _val;                                                                      \
   })
 
 #define DELETE(var) {free_##typeof(var)(&var)};
@@ -14,4 +15,3 @@
 #define ARR_SIZE(arr) (sizeof(arr) / sizeof(*arr))
 
 #endif
-
