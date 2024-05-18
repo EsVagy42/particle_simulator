@@ -3,13 +3,13 @@
 
 #include <stddef.h>
 
-struct Size2 {
+typedef struct {
   size_t width, height;
-};
+} Size2;
 
-struct Index2 {
+typedef struct {
   size_t x, y;
-};
+} Index2;
 
 #define GET_INDEX(size, index) (index.y * size.width + index.x)
 
