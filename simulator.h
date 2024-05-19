@@ -3,9 +3,7 @@
 
 #include "indexing.h"
 #include <raylib.h>
-
-#define CELL_DATA_SIZE 0
-
+#include "cell_data_size.h"
 
 typedef struct {
   Index2 position;
@@ -27,8 +25,6 @@ void free_Generation(Generation *gen);
 #define GET_CELL(gen, pos) (gen->cell_position[GET_INDEX(pos)]) 
 
 void swap_cells(Generation *gen, Cell *old_cell, Cell *new_cell);
-
-extern void (*CELL_UPDATE_FUNCTIONS[])(Generation *, Cell *);
 
 void generate_next_gen(Generation *gen);
 

@@ -1,12 +1,13 @@
 #include "simulator.h"
 #include "indexing.h"
+#include "update_functions.h"
 #include <stdlib.h>
 
 void init_Generation(Generation *gen, Size2 size) {
   size_t items = GET_SIZE(size);
   gen->size = size;
   gen->cells = malloc(items * sizeof(Cell));
-  gen->cell_position = malloc(items * sizeof(Cell*));
+  gen->cell_position = malloc(items * sizeof(Cell *));
   for (size_t index = 0; index < items; index++) {
     gen->cells[index] = (Cell){GET_INDEX2(size, index), BLACK, 0, {}};
     gen->cell_position[index] = &gen->cells[index];
@@ -29,8 +30,11 @@ void swap_cells(Generation *gen, Cell *first_cell, Cell *second_cell) {
 }
 
 void generate_next_gen(Generation *gen) {
-  for (Cell *current = gen->cells; current < gen->cells + sizeof(Cell) * GET_SIZE(gen->size); gen->cells++) {
-    void (*current_update_function)(Generation *, Cell *) = CELL_UPDATE_FUNCTIONS[current->type];
+  for (Cell *current = gen->cells;
+       current < gen->cells + GET_SIZE(gen->size);
+       current++) {
+    void (*current_update_function)(Generation *, Cell *) =
+        PARTICLE_UPDATE_FUNCTIONS[current->type];
     if (current_update_function != NULL) {
       current_update_function(gen, current);
     }
