@@ -20,7 +20,7 @@ int main() {
 
   while (!WindowShouldClose()) {
 
-    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) || IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
       Index2 mouse_pos = {GetMouseX() / PARTICLE_WIDTH, GetMouseY() / PARTICLE_HEIGHT};
 
       for (size_t y = mouse_pos.y - DRAW_RADIUS; y < mouse_pos.y + DRAW_RADIUS; y++) {
@@ -30,7 +30,11 @@ int main() {
           if (!GET_INDEX2_VALID(SIMULATOR_SIZE, cell_index)) {
             continue;
           }
-          GET_CELL((&generation), cell_index)->type = 1;
+          bool deleting = !IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+          GET_CELL((&generation), cell_index)->type = !deleting;
+          if (deleting) {
+            GET_CELL((&generation), cell_index)->color = BLACK;
+          }
         }
       }
     }
