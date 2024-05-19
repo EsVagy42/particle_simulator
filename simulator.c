@@ -1,6 +1,7 @@
 #include "simulator.h"
 #include "indexing.h"
 #include "update_functions.h"
+#include <raylib.h>
 #include <stdlib.h>
 
 void init_Generation(Generation *gen, Size2 size) {
@@ -30,9 +31,9 @@ void swap_cells(Generation *gen, Cell *first_cell, Cell *second_cell) {
 }
 
 void generate_next_gen(Generation *gen) {
-  for (Cell *current = gen->cells;
-       current < gen->cells + GET_SIZE(gen->size);
-       current++) {
+  for (size_t i = 0; i < GET_SIZE(gen->size); i++) {
+    Cell *current = gen->cells + GetRandomValue(0, GET_SIZE(gen->size) - 1);
+
     void (*current_update_function)(Generation *, Cell *) =
         PARTICLE_UPDATE_FUNCTIONS[current->type];
     if (current_update_function != NULL) {
