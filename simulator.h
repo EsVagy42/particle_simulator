@@ -22,7 +22,7 @@ void init_Generation(Generation *gen, Size2 size);
 
 void free_Generation(Generation *gen);
 
-#define GET_CELL(gen, pos) (gen->cell_position[GET_INDEX(pos)]) 
+#define GET_CELL(gen, pos) (gen->cell_position[GET_INDEX(gen->size, pos)]) 
 
 void swap_cells(Generation *gen, Cell *old_cell, Cell *new_cell);
 
