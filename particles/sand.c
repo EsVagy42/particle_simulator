@@ -12,9 +12,11 @@ const bool SWAPPABLE_CELL_TYPES[UPDATE_FUNCTION_COUNT] = {
 
 void update_sand(Generation *gen, Cell *cell) {
   Cell *swap_cell = NULL;
+
+  int random_direction = GetRandomValue(0, 1) * 2 - 1;
   Index2 swap_cell_index[] = {{cell->position.x, cell->position.y + 1},
-                              {cell->position.x - 1, cell->position.y + 1},
-                              {cell->position.x + 1, cell->position.y + 1}};
+                              {cell->position.x - random_direction, cell->position.y + 1},
+                              {cell->position.x + random_direction, cell->position.y + 1}};
   for (Index2 *test_index = swap_cell_index;
        test_index < swap_cell_index + ARR_SIZE(swap_cell_index); test_index++) {
     if (GET_INDEX2_VALID(gen->size, (*test_index))) {

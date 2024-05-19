@@ -7,6 +7,6 @@ main.o: main.c
 simulator.o: simulator.c
 	gcc simulator.c -c -g
 
-update_functions.o: update_functions.c
+update_functions.o: update_functions.c particles/*
 	gcc update_functions.c -c -g
 
