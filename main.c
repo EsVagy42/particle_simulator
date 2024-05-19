@@ -4,6 +4,8 @@
 #include <raylib.h>
 
 int main() {
+  const size_t DRAW_RADIUS = 3;
+
   const Size2 SIMULATOR_SIZE = {400, 300};
   const Size2 WINDOW_SIZE = {800, 600};
   const float PARTICLE_WIDTH =
@@ -18,7 +20,20 @@ int main() {
 
   while (!WindowShouldClose()) {
 
-    GET_CELL((&generation), ((Index2){200, 150}))->type = 1;
+    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+      Index2 mouse_pos = {GetMouseX() / PARTICLE_WIDTH, GetMouseY() / PARTICLE_HEIGHT};
+
+      for (size_t y = mouse_pos.y - DRAW_RADIUS; y < mouse_pos.y + DRAW_RADIUS; y++) {
+        for (size_t x = mouse_pos.x - DRAW_RADIUS; x < mouse_pos.x + DRAW_RADIUS; x++) {
+          Index2 cell_index = {x, y};
+          
+          if (!GET_INDEX2_VALID(SIMULATOR_SIZE, cell_index)) {
+            continue;
+          }
+          GET_CELL((&generation), cell_index)->type = 1;
+        }
+      }
+    }
 
     generate_next_gen(&generation);
 
