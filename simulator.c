@@ -62,7 +62,7 @@ void swap_cells(Generation *gen, Cell *first_cell, Cell *second_cell) {
   awake_range(gen, first_cell, second_cell);
 }
 
-void generate_next_gen(Generation *gen) {
+void generate_next_gen(Generation *gen, ParticleDrawer *pd) {
   for (size_t i = 0; i < GET_SIZE(gen->size); i++) {
     Cell *current = gen->cells + GetRandomValue(0, GET_SIZE(gen->size) - 1);
 
@@ -75,5 +75,7 @@ void generate_next_gen(Generation *gen) {
     if (current_update_function != NULL) {
       current_update_function(gen, current);
     }
+
+    draw_particle(pd, current);
   }
 }

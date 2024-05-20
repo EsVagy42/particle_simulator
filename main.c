@@ -1,3 +1,4 @@
+#include "drawing.h"
 #include "indexing.h"
 #include "macros.h"
 #include "simulator.h"
@@ -13,9 +14,13 @@ int main() {
               PARTICLE_HEIGHT =
                   (float)WINDOW_SIZE.height / (float)SIMULATOR_SIZE.height;
 
-  Generation generation CLEANUP(Generation) = NEW(Generation, SIMULATOR_SIZE);
-
   InitWindow(WINDOW_SIZE.width, WINDOW_SIZE.height, "Particle simulator");
+
+  ParticleDrawer drawer CLEANUP(ParticleDrawer) =
+      NEW(ParticleDrawer, ((Vector2){PARTICLE_WIDTH, PARTICLE_HEIGHT}),
+          WINDOW_SIZE);
+
+  Generation generation CLEANUP(Generation) = NEW(Generation, SIMULATOR_SIZE);
 
   while (!WindowShouldClose()) {
 
@@ -43,40 +48,18 @@ int main() {
       }
     }
 
-    generate_next_gen(&generation);
+    BeginTextureMode(drawer.texture);
+    { generate_next_gen(&generation, &drawer); }
+    EndTextureMode();
 
     BeginDrawing();
     {
       ClearBackground(BLACK);
-
-      for (size_t y = 0; y < generation.size.height; y++) {
-#pragma unroll 10
-        for (size_t x = 0; x < generation.size.width; x++) {
-          float particle_pos_x = x * PARTICLE_WIDTH,
-                particle_pos_y = y * PARTICLE_HEIGHT;
-
-          Color particle_color = ({
-            size_t index = GET_INDEX(generation.size, ((Index2){x, y}));
-            IsKeyDown(KEY_SPACE) ? generation.cells[index].color
-                                 : generation.cell_position[index]->color;
-          });
-
-          if (!ColorIsEqual(particle_color, BLACK)) {
-            DrawRectangle(particle_pos_x, particle_pos_y, PARTICLE_WIDTH,
-                          PARTICLE_HEIGHT, particle_color);
-          }
-        }
-      }
-
+      DrawTextureRec(drawer.texture.texture,
+                     (Rectangle){0, 0, drawer.texture.texture.width,
+                                 -drawer.texture.texture.height},
+                     (Vector2){0., 0.}, WHITE);
       DrawFPS(0, 0);
-      if (IsKeyDown(KEY_SPACE)) {
-        const char *memory_view_text = "Memory layout view";
-        DrawText(memory_view_text,
-                 WINDOW_SIZE.width / 2 -
-                     MeasureText(memory_view_text, GetFontDefault().baseSize) /
-                         2,
-                 20, GetFontDefault().baseSize, WHITE);
-      }
     }
     EndDrawing();
   }
