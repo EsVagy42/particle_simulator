@@ -16,7 +16,6 @@ int main() {
   Generation generation CLEANUP(Generation) = NEW(Generation, SIMULATOR_SIZE);
 
   InitWindow(WINDOW_SIZE.width, WINDOW_SIZE.height, "Particle simulator");
-  SetTargetFPS(2000);
 
   while (!WindowShouldClose()) {
 
