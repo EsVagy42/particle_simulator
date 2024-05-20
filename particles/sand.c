@@ -1,3 +1,6 @@
+#ifndef SAND_PARTICLE_H
+#define SNAD_PARTICLE_H
+
 #include "../simulator.h"
 #include "../update_functions.h"
 #include "empty.c"
@@ -36,3 +39,5 @@ void update_sand(Generation *gen, Cell *cell) {
 
   cell->color = YELLOW;
 }
+
+#endif

@@ -29,4 +29,6 @@ void swap_cells(Generation *gen, Cell *old_cell, Cell *new_cell);
 
 void generate_next_gen(Generation *gen);
 
+void awake_neighbours(Generation *gen, Cell *cell);
+
 #endif

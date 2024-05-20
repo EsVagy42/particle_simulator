@@ -20,17 +20,21 @@ int main() {
 
   while (!WindowShouldClose()) {
 
-    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) || IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
-      Index2 mouse_pos = {GetMouseX() / PARTICLE_WIDTH, GetMouseY() / PARTICLE_HEIGHT};
+    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) ||
+        IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
+      bool deleting = !IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+      Index2 mouse_pos = {GetMouseX() / PARTICLE_WIDTH,
+                          GetMouseY() / PARTICLE_HEIGHT};
 
-      for (size_t y = mouse_pos.y - DRAW_RADIUS; y < mouse_pos.y + DRAW_RADIUS; y++) {
-        for (size_t x = mouse_pos.x - DRAW_RADIUS; x < mouse_pos.x + DRAW_RADIUS; x++) {
+      for (size_t y = mouse_pos.y - DRAW_RADIUS; y < mouse_pos.y + DRAW_RADIUS;
+           y++) {
+        for (size_t x = mouse_pos.x - DRAW_RADIUS;
+             x < mouse_pos.x + DRAW_RADIUS; x++) {
           Index2 cell_index = {x, y};
-          
+
           if (!GET_INDEX2_VALID(SIMULATOR_SIZE, cell_index)) {
             continue;
           }
-          bool deleting = !IsMouseButtonDown(MOUSE_BUTTON_LEFT);
           GET_CELL((&generation), cell_index)->type = !deleting;
           GET_CELL((&generation), cell_index)->sleeping = deleting;
           if (deleting) {
@@ -47,16 +51,17 @@ int main() {
       ClearBackground(BLACK);
 
       for (size_t y = 0; y < generation.size.height; y++) {
-        #pragma unroll 10
+#pragma unroll 10
         for (size_t x = 0; x < generation.size.width; x++) {
           float particle_pos_x = x * PARTICLE_WIDTH,
                 particle_pos_y = y * PARTICLE_HEIGHT;
 
           Color particle_color = ({
             size_t index = GET_INDEX(generation.size, ((Index2){x, y}));
-            IsKeyDown(KEY_SPACE) ? generation.cells[index].color : generation.cell_position[index]->color;
+            IsKeyDown(KEY_SPACE) ? generation.cells[index].color
+                                 : generation.cell_position[index]->color;
           });
-          
+
           if (!ColorIsEqual(particle_color, BLACK)) {
             DrawRectangle(particle_pos_x, particle_pos_y, PARTICLE_WIDTH,
                           PARTICLE_HEIGHT, particle_color);
@@ -67,7 +72,11 @@ int main() {
       DrawFPS(0, 0);
       if (IsKeyDown(KEY_SPACE)) {
         const char *memory_view_text = "Memory layout view";
-        DrawText(memory_view_text, WINDOW_SIZE.width / 2 - MeasureText(memory_view_text, GetFontDefault().baseSize) / 2, 20, GetFontDefault().baseSize, WHITE);
+        DrawText(memory_view_text,
+                 WINDOW_SIZE.width / 2 -
+                     MeasureText(memory_view_text, GetFontDefault().baseSize) /
+                         2,
+                 20, GetFontDefault().baseSize, WHITE);
       }
     }
     EndDrawing();
