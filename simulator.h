@@ -8,6 +8,7 @@
 typedef struct {
   Index2 position;
   Color color;
+  bool sleeping;
   size_t type;
   char data[CELL_DATA_SIZE];
 } Cell;

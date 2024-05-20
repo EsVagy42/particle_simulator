@@ -16,7 +16,7 @@ int main() {
   Generation generation CLEANUP(Generation) = NEW(Generation, SIMULATOR_SIZE);
 
   InitWindow(WINDOW_SIZE.width, WINDOW_SIZE.height, "Particle simulator");
-  SetTargetFPS(60);
+  SetTargetFPS(2000);
 
   while (!WindowShouldClose()) {
 
@@ -32,6 +32,7 @@ int main() {
           }
           bool deleting = !IsMouseButtonDown(MOUSE_BUTTON_LEFT);
           GET_CELL((&generation), cell_index)->type = !deleting;
+          GET_CELL((&generation), cell_index)->sleeping = deleting;
           if (deleting) {
             GET_CELL((&generation), cell_index)->color = BLACK;
           }

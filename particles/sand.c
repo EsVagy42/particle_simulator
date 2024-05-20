@@ -30,6 +30,8 @@ void update_sand(Generation *gen, Cell *cell) {
 
   if (swap_cell != NULL) {
     swap_cells(gen, swap_cell, cell);
+  } else {
+    cell->sleeping = true;
   }
 
   cell->color = YELLOW;

@@ -10,7 +10,7 @@ void init_Generation(Generation *gen, Size2 size) {
   gen->cells = malloc(items * sizeof(Cell));
   gen->cell_position = malloc(items * sizeof(Cell *));
   for (size_t index = 0; index < items; index++) {
-    gen->cells[index] = (Cell){GET_INDEX2(size, index), BLACK, 0, {}};
+    gen->cells[index] = (Cell){GET_INDEX2(size, index), BLACK, true, 0, {}};
     gen->cell_position[index] = &gen->cells[index];
   }
 }
@@ -34,10 +34,27 @@ void generate_next_gen(Generation *gen) {
   for (size_t i = 0; i < GET_SIZE(gen->size); i++) {
     Cell *current = gen->cells + GetRandomValue(0, GET_SIZE(gen->size) - 1);
 
+    if (current->sleeping) {
+      continue;
+    }
+
     void (*current_update_function)(Generation *, Cell *) =
         PARTICLE_UPDATE_FUNCTIONS[current->type];
     if (current_update_function != NULL) {
       current_update_function(gen, current);
+    }
+
+    if (!current->sleeping) {
+      for (size_t y = current->position.y - 1; y <= current->position.y + 1;
+           y++) {
+        for (size_t x = current->position.x - 1; x <= current->position.x + 1;
+             x++) {
+          Index2 pos = {x, y};
+          if (GET_INDEX2_VALID(gen->size, pos)) {
+            GET_CELL(gen, pos)->sleeping = false;
+          }
+        }
+      }
     }
   }
 }
