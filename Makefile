@@ -7,7 +7,6 @@ main.o: main.c
 simulator.o: simulator.c
 	gcc simulator.c -c -g -pg
 
-    awake_neighbours(generation, GET_CELL(generation, ((Index2){})))
-rtiupdate_functions.o: update_functions.c particles/*
+update_functions.o: update_functions.c particles/*
 	gcc update_functions.c -c -g -pg
 
