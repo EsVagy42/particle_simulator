@@ -4,7 +4,7 @@
 #include <raylib.h>
 
 int main() {
-  const size_t DRAW_RADIUS = 3;
+  const size_t DRAW_RADIUS = 10;
 
   const Size2 SIMULATOR_SIZE = {400, 300};
   const Size2 WINDOW_SIZE = {800, 600};
@@ -47,6 +47,7 @@ int main() {
       ClearBackground(BLACK);
 
       for (size_t y = 0; y < generation.size.height; y++) {
+        #pragma unroll 10
         for (size_t x = 0; x < generation.size.width; x++) {
           float particle_pos_x = x * PARTICLE_WIDTH,
                 particle_pos_y = y * PARTICLE_HEIGHT;

@@ -45,8 +45,10 @@ void generate_next_gen(Generation *gen) {
     }
 
     if (!current->sleeping) {
+      #pragma unroll 3
       for (size_t y = current->position.y - 1; y <= current->position.y + 1;
            y++) {
+        #pragma unroll 3
         for (size_t x = current->position.x - 1; x <= current->position.x + 1;
              x++) {
           Index2 pos = {x, y};
