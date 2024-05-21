@@ -15,4 +15,6 @@ void generate_next_gen(Generation *gen, ParticleDrawer *pd);
 
 void awake_neighbours(Generation *gen, Cell *cell);
 
+void awake_range(Generation *gen, Cell *cell0, Cell *cell1);
+
 #endif
