@@ -1,16 +1,22 @@
-ARGS ?= -g -pg
+CC ?= gcc
+CFLAGS ?= -g -pg
+LDFLAGS ?= -lraylib -lm
 
-particle_simulator: main.o simulator.o update_functions.o drawing.o
-	gcc -o particle_simulator main.o simulator.o update_functions.o drawing.o -lraylib -lm $(ARGS)
+OUTDIR=out
 
-main.o: main.c
-	gcc main.c -c $(ARGS)
+SOURCES=$(wildcard *.c)
 
-simulator.o: simulator.c
-	gcc simulator.c -c $(ARGS)
+OBJECTS=$(patsubst %.c,$(OUTDIR)/%.o,$(SOURCES))
 
-update_functions.o: update_functions.c particles/*
-	gcc update_functions.c -c $(ARGS)
-	
-drawing.o: drawing.c
-	gcc drawing.c -c $(ARGS)
+all: $(OUTDIR)/parsim
+
+$(OUTDIR)/parsim: $(OBJECTS)
+	$(CC) -o $@ $^ $(LDFLAGS) $(CFLAGS)
+
+$(OUTDIR)/%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(shell mkdir -p $(OUTDIR))
+
+clean:
+	rm -rf $(OUTDIR)/*.o $(OUTDIR)/parsim

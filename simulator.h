@@ -1,20 +1,15 @@
 #ifndef SIMULATOR_H
 #define SIMULATOR_H
 
-#include "indexing.h"
-#include <raylib.h>
-#include "cell_data_size.h"
 #include "simulator_structs.h"
-#include "drawing.h"
+#define CELL(gen, pos) (gen->cell_position + GET_INDEX(gen->size, pos))
 
-#define GET_CELL(gen, pos) (gen->cell_position[GET_INDEX(gen->size, pos)]) 
+#define CELL_COLOR(gen, pos) (gen->cell_colors + GET_INDEX(gen->size, pos))
 
-void swap_cells(Generation *gen, Cell *old_cell, Cell *new_cell);
+void swap_cells(Generation *gen, Cell *current_cell, Cell *other_cell);
 
-void generate_next_gen(Generation *gen, ParticleDrawer *pd);
+void update_gen(Generation *gen);
 
-void awake_neighbours(Generation *gen, Cell *cell);
-
-void awake_range(Generation *gen, Cell *cell0, Cell *cell1);
+void draw_gen(Generation *gen);
 
 #endif

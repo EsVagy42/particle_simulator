@@ -1,27 +1,24 @@
 #ifndef SIMULATOR_STRUCTS_H
 #define SIMULATOR_STRUCTS_H
 
+#include "cell_specific_data_size.h"
 #include "indexing.h"
 #include <raylib.h>
-#include "cell_data_size.h"
-
 typedef struct {
-  Index2 position;
-  Color color;
-  bool sleeping;
+  Position2 position;
   size_t type;
   char data[CELL_DATA_SIZE];
 } Cell;
 
 typedef struct {
+  Size2 size;
   Cell **cell_position;
   Cell *cells;
-  Size2 size;
+  Color *cell_colors;
 } Generation;
 
-void init_Generation(Generation *gen, Size2 size);
+void InitGeneration(Generation *gen, Size2 size);
 
-void free_Generation(Generation *gen);
+void DeleteGeneration(Generation *gen);
 
 #endif
-

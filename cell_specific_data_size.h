@@ -1,0 +1,6 @@
+#ifndef CELL_SPECIFIC_DATA_SIZE_H
+#define CELL_SPECIFIC_DATA_SIZE_H
+
+#define CELL_DATA_SIZE 0
+
+#endif
