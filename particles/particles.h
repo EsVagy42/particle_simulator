@@ -3,6 +3,7 @@
 
 enum Particles {
   Empty,
+  Sand,
 
   NUM_PARTICLES
 };

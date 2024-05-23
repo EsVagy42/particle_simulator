@@ -2,7 +2,7 @@
 #define SIMULATOR_H
 
 #include "simulator_structs.h"
-#define CELL(gen, pos) (gen->cell_position + GET_INDEX(gen->size, pos))
+#define CELL(gen, pos) (*(gen->cell_position + GET_INDEX(gen->size, pos)))
 
 #define CELL_COLOR(gen, pos) (gen->cell_colors + GET_INDEX(gen->size, pos))
 
