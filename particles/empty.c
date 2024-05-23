@@ -3,7 +3,7 @@
 CREATE_PARTICLE(Empty);
 
 void EmptyInit(Generation *gen, Cell *cell) {
-  cell->type = EmptyParticle;
+  cell->type = Empty;
 }
 
 ADD_PARTICLE(Empty);

@@ -1,8 +1,7 @@
 #include "simulator_structs.h"
 #include "indexing.h"
+#include "particles/particles.h"
 #include <stdlib.h>
-
-extern size_t EmptyParticle;
 
 void InitGeneration(Generation *gen, Size2 size) {
   size_t items = GET_LENGTH(size);
@@ -13,7 +12,7 @@ void InitGeneration(Generation *gen, Size2 size) {
   gen->cell_colors = malloc(items * sizeof(Color));
 
   for (size_t i = 0; i < items; i++) {
-    gen->cells[i] = (Cell){GET_POS(size, i), EmptyParticle, {}};
+    gen->cells[i] = (Cell){GET_POS(size, i), Empty, {}};
     gen->cell_position[i] = &gen->cells[i];
     gen->cell_colors[i] = BLACK;
   }
