@@ -15,6 +15,7 @@ typedef struct {
   Cell **cell_position;
   Cell *cells;
   Color *cell_colors;
+  Texture2D texture;
 } Generation;
 
 void InitGeneration(Generation *gen, Size2 size);

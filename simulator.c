@@ -38,10 +38,9 @@ void draw_gen(Generation *gen) {
     .mipmaps = 1,
   };
 
-  Texture2D texture = LoadTextureFromImage(image);
+  UnloadTexture(gen->texture);
+  gen->texture = LoadTextureFromImage(image);
 
   Size2 window_size = {GetScreenWidth(), GetScreenHeight()};
-  DrawTexturePro(texture, (Rectangle){0, 0, gen->size.width, gen->size.height}, (Rectangle){0, 0, window_size.width, window_size.height}, (Vector2){0., 0.}, 0., WHITE);
-
-  UnloadTexture(texture);
+  DrawTexturePro(gen->texture, (Rectangle){0, 0, gen->size.width, gen->size.height}, (Rectangle){0, 0, window_size.width, window_size.height}, (Vector2){0., 0.}, 0., WHITE);
 }

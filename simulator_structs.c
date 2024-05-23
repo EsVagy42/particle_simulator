@@ -1,6 +1,7 @@
 #include "simulator_structs.h"
 #include "indexing.h"
 #include "particles/particles.h"
+#include <raylib.h>
 #include <stdlib.h>
 
 void InitGeneration(Generation *gen, Size2 size) {
@@ -22,4 +23,5 @@ void DeleteGeneration(Generation *gen) {
   free(gen->cell_position);
   free(gen->cells);
   free(gen->cell_colors);
+  UnloadTexture(gen->texture);
 }
