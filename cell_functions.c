@@ -28,8 +28,8 @@ size_t add_particle(void (*init_func)(Generation *gen, Cell *cell),
     }
   }
 
-    CELL_UPDATE_FUNCTIONS[current_particle_index] = init_func;
-    CELL_INIT_FUNCTIONS[current_particle_index] = update_func;
+    CELL_UPDATE_FUNCTIONS[current_particle_index] = update_func;
+    CELL_INIT_FUNCTIONS[current_particle_index] = init_func;
 
     return current_particle_index++;
 }
