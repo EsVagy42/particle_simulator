@@ -2,7 +2,6 @@
 #include "cell_functions.h"
 #include "indexing.h"
 #include "simulator_structs.h"
-#include <c++/13/bits/fs_fwd.h>
 #include <raylib.h>
 
 void swap_cells(Generation *gen, Cell *current_cell, Cell *other_cell) {
