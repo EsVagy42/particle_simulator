@@ -24,6 +24,6 @@ typedef struct {
 #define SUB_POS(pos0, pos1) ((Position2){pos0.x - pos1.x, pos0.y - pos1.y})
 
 #define GET_POS(size, index)                                                   \
-  ((Position2){index / size.width, index % size.width})
+  ((Position2){index % size.width, index / size.width})
 
 #endif

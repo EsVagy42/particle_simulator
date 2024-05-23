@@ -11,7 +11,6 @@ int main() {
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(800, 600, "Particle Simulator V3");
-
   Generation generation AUTODEL(Generation) = NEW(Generation, SIMULATOR_SIZE);
 
   while (!WindowShouldClose()) {
