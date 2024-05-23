@@ -26,9 +26,10 @@ size_t add_particle(void (*init_func)(Generation *gen, Cell *cell),
           realloc(CELL_INIT_FUNCTIONS,
                   current_array_size * sizeof(typeof(*CELL_INIT_FUNCTIONS)));
     }
+  }
 
     CELL_UPDATE_FUNCTIONS[current_particle_index] = init_func;
     CELL_INIT_FUNCTIONS[current_particle_index] = update_func;
-    current_particle_index++;
-  }
+
+    return current_particle_index++;
 }
