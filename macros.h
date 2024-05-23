@@ -19,4 +19,6 @@
 
 #define MAX(a, b) (a > b ? a : b)
 
+#define ARREND(arr) (arr + ARRSIZE(arr))
+
 #endif
