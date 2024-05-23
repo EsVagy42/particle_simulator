@@ -2,6 +2,8 @@
 #include "indexing.h"
 #include <stdlib.h>
 
+extern size_t EmptyParticle;
+
 void InitGeneration(Generation *gen, Size2 size) {
   size_t items = GET_LENGTH(size);
 
@@ -11,7 +13,7 @@ void InitGeneration(Generation *gen, Size2 size) {
   gen->cell_colors = malloc(items * sizeof(Color));
 
   for (size_t i = 0; i < items; i++) {
-    gen->cells[i] = (Cell){GET_POS(size, i), 0, {}};
+    gen->cells[i] = (Cell){GET_POS(size, i), EmptyParticle, {}};
     gen->cell_position[i] = &gen->cells[i];
     gen->cell_colors[i] = BLACK;
   }
