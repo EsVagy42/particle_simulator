@@ -4,7 +4,7 @@
 #include "simulator_structs.h"
 #include <raylib.h>
 
-// extern void SandInit(Generation *, Cell *);
+extern void SandInit(Generation *, Cell *);
 
 int main() {
   const Size2 SIMULATOR_SIZE = {400, 300};
@@ -15,7 +15,7 @@ int main() {
   Generation generation AUTODEL(Generation) = NEW(Generation, SIMULATOR_SIZE);
 
   while (!WindowShouldClose()) {
-    // SandInit(&generation, CELL((&generation), ((Position2){200, 50})));
+    SandInit(&generation, CELL((&generation), ((Position2){200, 50})));
     
     update_gen(&generation);
     

@@ -19,7 +19,7 @@ void SandUpdate(Generation *gen, Cell *cell) {
       continue;
     }
     Cell *other_cell = CELL(gen, cell_pos);
-    if (!swappable_particles[cell->type]) {
+    if (!swappable_particles[other_cell->type]) {
       continue;
     }
     swap_cells(gen, cell, other_cell);
