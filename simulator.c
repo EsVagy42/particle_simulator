@@ -41,7 +41,8 @@ void draw_gen(Generation *gen) {
 
   Texture2D texture = LoadTextureFromImage(image);
 
-  DrawTexture(texture, 0, 0, WHITE);
+  Size2 window_size = {GetScreenWidth(), GetScreenHeight()};
+  DrawTexturePro(texture, (Rectangle){0, 0, gen->size.width, gen->size.height}, (Rectangle){0, 0, window_size.width, window_size.height}, (Vector2){0., 0.}, 0., WHITE);
 
   UnloadTexture(texture);
 }
