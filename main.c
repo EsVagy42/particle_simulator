@@ -22,6 +22,7 @@ int main() {
   generation = NEW(Generation, SIMULATOR_SIZE);
 
   HandleResize(&generation);
+  HideCursor();
 
 #if defined(PLATFORMWEB)
   emscripten_set_main_loop(UpdateDrawFrame, 60, 1);

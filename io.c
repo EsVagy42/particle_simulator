@@ -51,11 +51,16 @@ void HandleDraw(Generation *gen) {
 }
 
 void DrawBrush(Generation *gen) {
-  DrawRectangleLines(GetMouseX() - draw_radius * gen->cell_graphical_size.x,
-                GetMouseY() - draw_radius * gen->cell_graphical_size.y,
-                2 * draw_radius * gen->cell_graphical_size.x,
-                2 * draw_radius * gen->cell_graphical_size.y,
-                (Color){255, 255, 255, 255});
+  Position2 mouse_pos = {GetMouseX(), GetMouseY()};
+  DrawRectangleLines(mouse_pos.x - draw_radius * gen->cell_graphical_size.x,
+                     mouse_pos.y - draw_radius * gen->cell_graphical_size.y,
+                     2 * draw_radius * gen->cell_graphical_size.x,
+                     2 * draw_radius * gen->cell_graphical_size.y, WHITE);
+  const char *particle_name = PARTICLE_NAMES[selected_index];
+  int font_size = GetFontDefault().baseSize;
+  Position2 offset = {MeasureText(particle_name, font_size) / 2, font_size / 2};
+  DrawText(particle_name, mouse_pos.x - offset.x, mouse_pos.y - offset.y,
+           font_size, WHITE);
 }
 
 void HandleResize(Generation *gen) {
