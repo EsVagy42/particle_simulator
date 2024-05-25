@@ -6,7 +6,7 @@
 #include <raylib.h>
 typedef struct {
   Position2 position;
-  size_t type;
+  int type;
   char data[CELL_DATA_SIZE];
 } Cell;
 

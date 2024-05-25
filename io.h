@@ -4,7 +4,7 @@
 #include "simulator_structs.h"
 #include <stddef.h>
 
-extern size_t selected_index;
+extern int selected_index;
 
 void HandleUpdateSelectedIndex();
 

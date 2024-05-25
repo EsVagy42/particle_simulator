@@ -6,8 +6,8 @@
 
 void swap_cells(Generation *gen, Cell *current_cell, Cell *other_cell) {
   Position2 other_position = other_cell->position;
-  size_t other_index = GET_INDEX(gen->size, other_position);
-  size_t current_index = GET_INDEX(gen->size, current_cell->position);
+  int other_index = GET_INDEX(gen->size, other_position);
+  int current_index = GET_INDEX(gen->size, current_cell->position);
   gen->cell_colors[current_index] = gen->cell_colors[other_index];
   other_cell->position = current_cell->position;
   current_cell->position = other_position;
@@ -16,8 +16,8 @@ void swap_cells(Generation *gen, Cell *current_cell, Cell *other_cell) {
 }
 
 void update_gen(Generation *gen) {
-  const size_t GENERATION_LENGTH = GET_LENGTH(gen->size);
-  for (size_t i = 0; i < GENERATION_LENGTH; i++) {
+  const int GENERATION_LENGTH = GET_LENGTH(gen->size);
+  for (int i = 0; i < GENERATION_LENGTH; i++) {
     Cell *current = gen->cells + GetRandomValue(0, GENERATION_LENGTH - 1);
 
     void (*update_function)(Generation *, Cell *) =

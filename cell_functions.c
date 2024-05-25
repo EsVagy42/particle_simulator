@@ -7,10 +7,10 @@ void (**CELL_UPDATE_FUNCTIONS)(Generation *gen, Cell *cell);
 
 void (**CELL_INIT_FUNCTIONS)(Generation *gen, Cell *cell);
 
-void add_particle(size_t particle_index,
+void add_particle(int particle_index,
                   void (*init_func)(Generation *gen, Cell *cell),
                   void (*update_func)(Generation *gen, Cell *cell)) {
-  static size_t current_array_size = 0;
+  static int current_array_size = 0;
 
   if (current_array_size == 0) {
     current_array_size = NUM_PARTICLES;

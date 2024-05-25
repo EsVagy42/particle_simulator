@@ -8,10 +8,10 @@
 #include <raymath.h>
 #include "simulator_structs.h"
 
-size_t selected_index = 1;
+int selected_index = 1;
 
 void HandleUpdateSelectedIndex() {
-  for (size_t i = 0; i < 9; i++) {
+  for (int i = 0; i < 9; i++) {
     if (i == NUM_PARTICLES) {
       break;
     }
@@ -35,7 +35,7 @@ void HandleDraw(Generation *gen) {
     return;
   }
   Position2 position = {GetMouseX() / gen->cell_graphical_size.x, GetMouseY() / gen->cell_graphical_size.y};
-  size_t particle_index =
+  int particle_index =
       IsMouseButtonDown(MOUSE_BUTTON_RIGHT) ? 0 : selected_index;
 
   for (int y = position.y - draw_radius; y <= position.y + draw_radius;
