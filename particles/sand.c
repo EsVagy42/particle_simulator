@@ -1,5 +1,4 @@
 #include "../particle_includes.h"
-#include "particles.h"
 
 CREATE_PARTICLE(Sand);
 
