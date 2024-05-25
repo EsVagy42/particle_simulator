@@ -42,7 +42,6 @@ void UpdateDrawFrame() {
     
     BeginDrawing();
     {
-      ClearBackground(WHITE);
       draw_gen(&generation);
       DrawFPS(0, 0);
     }
