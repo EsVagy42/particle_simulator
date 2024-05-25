@@ -1,11 +1,12 @@
 #include "indexing.h"
+#include "io.h"
 #include "macros.h"
 #include "simulator.h"
 #include "simulator_structs.h"
 #include <raylib.h>
 
 #if defined(PLATFORMWEB)
-  #include <emscripten/emscripten.h>
+#include <emscripten/emscripten.h>
 #endif
 
 extern void SandInit(Generation *, Cell *);
@@ -20,11 +21,13 @@ int main() {
   InitWindow(800, 600, "Particle Simulator V3");
   generation = NEW(Generation, SIMULATOR_SIZE);
 
+  HandleResize(&generation);
+
 #if defined(PLATFORMWEB)
   emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
   SetTargetFPS(60);
-  
+
   while (!WindowShouldClose()) {
     UpdateDrawFrame();
   }
@@ -38,14 +41,20 @@ int main() {
 }
 
 void UpdateDrawFrame() {
-    SandInit(&generation, CELL((&generation), ((Position2){200, 50})));
-    
-    update_gen(&generation);
-    
-    BeginDrawing();
-    {
-      draw_gen(&generation);
-      DrawFPS(0, 0);
-    }
-    EndDrawing();
+  if (IsWindowResized()) {
+    HandleResize(&generation);
+  }
+
+  HandleUpdateSelectedIndex();
+  HandleUpdateDrawRadius();
+  HandleDraw(&generation);
+
+  update_gen(&generation);
+
+  BeginDrawing();
+  {
+    draw_gen(&generation);
+    DrawFPS(0, 0);
+  }
+  EndDrawing();
 }

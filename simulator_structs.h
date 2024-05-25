@@ -16,10 +16,13 @@ typedef struct {
   Cell *cells;
   Color *cell_colors;
   Texture2D texture;
+  Vector2 cell_graphical_size;
 } Generation;
 
 void InitGeneration(Generation *gen, Size2 size);
 
 void DeleteGeneration(Generation *gen);
+
+void CalculateCellGraphicalSize(Generation *gen, Size2 window_size);
 
 #endif

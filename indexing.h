@@ -4,11 +4,11 @@
 #include <stddef.h>
 
 typedef struct {
-  size_t width, height;
+  int width, height;
 } Size2;
 
 typedef struct {
-  size_t x, y;
+  int x, y;
 } Position2;
 
 #define GET_LENGTH(size) (size.width * size.height)

@@ -19,6 +19,10 @@ void InitGeneration(Generation *gen, Size2 size) {
   }
 }
 
+void CalculateCellGraphicalSize(Generation *gen, Size2 window_size) {
+  gen->cell_graphical_size = (Vector2){(float)window_size.width / gen->size.width, (float)window_size.height / gen->size.height};
+}
+
 void DeleteGeneration(Generation *gen) {
   free(gen->cell_position);
   free(gen->cells);
