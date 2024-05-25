@@ -14,6 +14,8 @@ void HandleUpdateDrawRadius();
 
 void HandleDraw(Generation *gen);
 
+void DrawBrush(Generation *gen);
+
 void HandleResize(Generation *gen);
 
 #endif

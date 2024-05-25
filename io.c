@@ -6,7 +6,6 @@
 #include "simulator_structs.h"
 #include <raylib.h>
 #include <raymath.h>
-#include "simulator_structs.h"
 
 int selected_index = 1;
 
@@ -34,12 +33,13 @@ void HandleDraw(Generation *gen) {
         IsMouseButtonDown(MOUSE_BUTTON_RIGHT))) {
     return;
   }
-  Position2 position = {GetMouseX() / gen->cell_graphical_size.x, GetMouseY() / gen->cell_graphical_size.y};
+
+  Position2 position = {GetMouseX() / gen->cell_graphical_size.x,
+                        GetMouseY() / gen->cell_graphical_size.y};
   int particle_index =
       IsMouseButtonDown(MOUSE_BUTTON_RIGHT) ? 0 : selected_index;
 
-  for (int y = position.y - draw_radius; y <= position.y + draw_radius;
-       y++) {
+  for (int y = position.y - draw_radius; y <= position.y + draw_radius; y++) {
     for (int x = position.x - draw_radius; x <= position.x + draw_radius; x++) {
       Position2 cell_pos = {x, y};
       if (!IS_POS_VALID(gen->size, cell_pos)) {
@@ -48,6 +48,14 @@ void HandleDraw(Generation *gen) {
       CELL_INIT_FUNCTIONS[particle_index](gen, CELL(gen, cell_pos));
     }
   }
+}
+
+void DrawBrush(Generation *gen) {
+  DrawRectangleLines(GetMouseX() - draw_radius * gen->cell_graphical_size.x,
+                GetMouseY() - draw_radius * gen->cell_graphical_size.y,
+                2 * draw_radius * gen->cell_graphical_size.x,
+                2 * draw_radius * gen->cell_graphical_size.y,
+                (Color){255, 255, 255, 255});
 }
 
 void HandleResize(Generation *gen) {

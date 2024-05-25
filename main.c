@@ -54,6 +54,7 @@ void UpdateDrawFrame() {
   BeginDrawing();
   {
     draw_gen(&generation);
+    DrawBrush(&generation);
     DrawFPS(0, 0);
   }
   EndDrawing();
