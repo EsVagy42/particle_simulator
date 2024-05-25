@@ -23,8 +23,8 @@ LDFLAGS ?= -lraylib -lm
 
 # Additional flags for emcc
 ifeq ($(PLATFORM),PLATFORM_WEB)
-	override LDFLAGS = -s USE_GLFW=3 --shell-file minshell.html -DPLATFORMWEB -L/usr/local/lib -lraylibweb -lm
-	CFLAGS += -I/usr/local/include
+	override LDFLAGS = -s USE_GLFW=3 --shell-file minshell.html -L/usr/local/lib -lraylibweb -lm
+	CFLAGS += -I/usr/local/include -DPLATFORMWEB 
 endif
 
 # Output directory for compiled files

@@ -21,7 +21,7 @@ int main() {
   generation = NEW(Generation, SIMULATOR_SIZE);
 
 #if defined(PLATFORMWEB)
-  emsripten_set_main_loop(UpdateDrawFrame, 60, 1);
+  emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
   while (!WindowShouldClose()) {
     UpdateDrawFrame();
