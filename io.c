@@ -21,11 +21,11 @@ void HandleUpdateSelectedIndex() {
   }
 }
 
-int draw_radius = 1;
+int draw_radius = 10;
 
 void HandleUpdateDrawRadius() {
   draw_radius += GetMouseWheelMoveV().y;
-  draw_radius = Clamp(draw_radius, 1, 50);
+  draw_radius = Clamp(draw_radius, 0, 50);
 }
 
 void HandleDraw(Generation *gen) {
