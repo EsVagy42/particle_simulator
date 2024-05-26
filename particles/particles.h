@@ -5,6 +5,7 @@ enum Particles {
   Empty,
   Sand,
   Wall,
+  Water,
 
   NUM_PARTICLES
 };

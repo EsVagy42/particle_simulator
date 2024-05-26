@@ -3,6 +3,7 @@
 
 #include "cell_specific_data_size.h"
 #include "indexing.h"
+#include <assert.h>
 #include <raylib.h>
 typedef struct {
   Position2 position;
@@ -18,6 +19,13 @@ typedef struct {
   Texture2D texture;
   Vector2 cell_graphical_size;
 } Generation;
+
+#define CELL_DATA(cell, type) (*(type *)(cell->data))
+
+#define CHECK_CELL_DATA_TYPE(type)                                             \
+  static_assert(sizeof(type) <= CELL_DATA_SIZE,                               \
+                 "Type too big, consider changing `CELL_DATA_SIZE` in "        \
+                 "`cell_specific_data_size.h` to make it fit")
 
 void InitGeneration(Generation *gen, Size2 size);
 

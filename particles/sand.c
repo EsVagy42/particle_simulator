@@ -1,8 +1,9 @@
 #include "../particle_includes.h"
+#include "particles.h"
 
 CREATE_PARTICLE(Sand);
 
-bool swappable_particles[NUM_PARTICLES] = {[Empty] = true};
+bool sand_swappable_particles[NUM_PARTICLES] = {[Empty] = true, [Water] = true};
 
 void SandInit(Generation *gen, Cell *cell) {
   cell->type = Sand;
@@ -18,7 +19,7 @@ void SandUpdate(Generation *gen, Cell *cell) {
       continue;
     }
     Cell *other_cell = CELL(gen, cell_pos);
-    if (!swappable_particles[other_cell->type]) {
+    if (!sand_swappable_particles[other_cell->type]) {
       continue;
     }
     swap_cells(gen, cell, other_cell);
