@@ -5,6 +5,8 @@
 CREATE_PARTICLE(FakeWater)
 
 bool fwater_swappable_particles[NUM_PARTICLES] = {[Empty] = true};
+const int LOOP_COUNT = 400;
+const int FALL_BEFORE_RETURN = 3;
 
 typedef struct {
   bool sliding_right;
@@ -18,7 +20,8 @@ void FakeWaterInit(Generation *gen, Cell *cell) {
 }
 
 void FakeWaterUpdate(Generation *gen, Cell *cell) {
-  for (int i = 0; i < 128; i++) {
+  int fall_count = FALL_BEFORE_RETURN;
+  for (int i = 0; i < LOOP_COUNT; i++) {
     static Position2 possible_moves_arr[2][3] = {{{0, 1}, {-1, 1}, {-1, 0}},
                                                  {{0, 1}, {1, 1}, {1, 0}}};
     Position2 *possible_moves =
@@ -33,6 +36,9 @@ void FakeWaterUpdate(Generation *gen, Cell *cell) {
         continue;
       }
       swap_cells(gen, cell, other_cell);
+      if (move != possible_moves) {
+        fall_count = FALL_BEFORE_RETURN;
+      }
       goto CHECK;
     }
     CELL_DATA(cell, FWaterStruct).sliding_right =
@@ -48,6 +54,10 @@ void FakeWaterUpdate(Generation *gen, Cell *cell) {
     }
     Cell *bottom_cell = CELL(gen, bottom_pos);
     if (bottom_cell->type != FakeWater) {
+      if (fall_count != 0) {
+        fall_count--;
+        continue;
+      }
       *CELL_COLOR(gen, cell->position) = SKYBLUE;
       return;
     }
