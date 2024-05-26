@@ -3,7 +3,8 @@
 
 CREATE_PARTICLE(Sand);
 
-bool sand_swappable_particles[NUM_PARTICLES] = {[Empty] = true, [Water] = true};
+bool sand_swappable_particles[NUM_PARTICLES] = {
+    [Empty] = true, [Water] = true, [FakeWater] = true};
 
 void SandInit(Generation *gen, Cell *cell) {
   cell->type = Sand;

@@ -4,8 +4,8 @@
 
 CREATE_PARTICLE(Water);
 
-bool water_swappable_particles[NUM_PARTICLES] = {[Empty] = true};
-bool water_slideable_particles[NUM_PARTICLES] = {[Empty] = true};
+bool water_swappable_particles[NUM_PARTICLES] = {[Empty] = true, [FakeWater] = true};
+bool water_slideable_particles[NUM_PARTICLES] = {[Empty] = true, [FakeWater] = true};
 
 typedef struct {
   bool sliding_right;
