@@ -56,4 +56,4 @@ $(shell mkdir -p $(OUTDIR))
 
 # Clean up the build: remove object files and the executable
 clean:
-	rm -rf $(OUTDIR)/*.o $(OUTDIR)/parsim $(OUTDIR)/index.html $(OUTDIR)/index.js $(OUTDIR)/index.wasm
+	rm -rf $(OUTDIR)/*.o $(OUTDIR)/parsim $(OUTDIR)/index.html $(OUTDIR)/index.js $(OUTDIR)/index.wasm $(OUTDIR)/particles/*.o
