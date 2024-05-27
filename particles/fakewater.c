@@ -36,9 +36,6 @@ void FakeWaterUpdate(Generation *gen, Cell *cell) {
         continue;
       }
       swap_cells(gen, cell, other_cell);
-      if (move != possible_moves) {
-        fall_count = FALL_BEFORE_RETURN;
-      }
       goto CHECK;
     }
     CELL_DATA(cell, FWaterStruct).sliding_right =
