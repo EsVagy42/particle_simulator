@@ -1,4 +1,5 @@
 #include "../particle_includes.h"
+#include <raylib.h>
 
 CREATE_PARTICLE(Sand);
 
@@ -11,8 +12,9 @@ void SandInit(Generation *gen, Cell *cell) {
 }
 
 void SandUpdate(Generation *gen, Cell *cell) {
-  static Position2 possible_moves[] = {{0, 1}, {1, 1}, {-1, 1}};
-  TRY_SWAP(gen, cell, possible_moves, sand_swappable_particles[_cell->type]);
+  static Position2 possible_moves[2][3] = {{{0, 1}, {1, 1}, {-1, 1}}, {{0, 1}, {-1, 1}, {1, 1}}};
+  bool polarity = GetRandomValue(0, 1);
+  TRY_SWAP(gen, cell, possible_moves[polarity], sand_swappable_particles[_cell->type]);
   *CELL_COLOR(gen, cell->position) = YELLOW;
 }
 
