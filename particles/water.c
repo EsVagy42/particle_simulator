@@ -1,10 +1,9 @@
 #include "../particle_includes.h"
-#include "particles.h"
 #include <raylib.h>
 
 CREATE_PARTICLE(Water)
 
-bool fwater_swappable_particles[NUM_PARTICLES] = {[Empty] = true};
+bool water_swappable_particles[NUM_PARTICLES] = {[Empty] = true};
 const int LOOP_COUNT = 400;
 const int FALL_BEFORE_RETURN = 3;
 
@@ -24,26 +23,19 @@ void WaterUpdate(Generation *gen, Cell *cell) {
   for (int i = 0; i < LOOP_COUNT; i++) {
     static Position2 possible_moves_arr[2][3] = {{{0, 1}, {-1, 1}, {-1, 0}},
                                                  {{0, 1}, {1, 1}, {1, 0}}};
-    Position2 *possible_moves =
-        possible_moves_arr[CELL_DATA(cell, WaterStruct).sliding_right];
-    for (Position2 *move = possible_moves; move < possible_moves + 3; move++) {
-      Position2 cell_pos = ADD_POS(cell->position, (*move));
-      if (!IS_POS_VALID(gen->size, cell_pos)) {
-        continue;
-      }
-      Cell *other_cell = CELL(gen, cell_pos);
-      if (!fwater_swappable_particles[other_cell->type]) {
-        continue;
-      }
-      swap_cells(gen, cell, other_cell);
-      goto CHECK;
-    }
-    CELL_DATA(cell, WaterStruct).sliding_right =
-        !CELL_DATA(cell, WaterStruct).sliding_right;
-    *CELL_COLOR(gen, cell->position) = SKYBLUE;
-    return;
+    bool swap_success;
+    TRY_SWAP_RESULT(
+        gen, cell,
+        possible_moves_arr[CELL_DATA(cell, WaterStruct).sliding_right],
+        water_swappable_particles[_cell->type], swap_success);
 
-  CHECK:
+    if (!swap_success) {
+      CELL_DATA(cell, WaterStruct).sliding_right =
+          !CELL_DATA(cell, WaterStruct).sliding_right;
+      *CELL_COLOR(gen, cell->position) = BLUE;
+      return;
+    }
+
     Position2 bottom_pos = ADD_POS(cell->position, ((Position2){0, 1}));
     if (!IS_POS_VALID(gen->size, bottom_pos)) {
       *CELL_COLOR(gen, cell->position) = SKYBLUE;
@@ -59,6 +51,7 @@ void WaterUpdate(Generation *gen, Cell *cell) {
       return;
     }
   }
+  *CELL_COLOR(gen, cell->position) = SKYBLUE;
 }
 
 ADD_PARTICLE(Water)
