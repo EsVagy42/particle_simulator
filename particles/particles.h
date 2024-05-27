@@ -6,6 +6,7 @@ enum Particles {
   Wall,
   Sand,
   Water,
+  Gravel,
 
   NUM_PARTICLES
 };
