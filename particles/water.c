@@ -2,10 +2,11 @@
 #include "particles.h"
 #include <raylib.h>
 
-CREATE_PARTICLE(Water);
+CREATE_PARTICLE(Water)
 
-bool water_swappable_particles[NUM_PARTICLES] = {[Empty] = true, [FakeWater] = true};
-bool water_slideable_particles[NUM_PARTICLES] = {[Empty] = true, [FakeWater] = true};
+bool fwater_swappable_particles[NUM_PARTICLES] = {[Empty] = true};
+const int LOOP_COUNT = 400;
+const int FALL_BEFORE_RETURN = 3;
 
 typedef struct {
   bool sliding_right;
@@ -15,53 +16,49 @@ CHECK_CELL_DATA_TYPE(WaterStruct);
 void WaterInit(Generation *gen, Cell *cell) {
   cell->type = Water;
   CELL_DATA(cell, WaterStruct).sliding_right = GetRandomValue(0, 1);
-  *CELL_COLOR(gen, cell->position) = BLUE;
+  *CELL_COLOR(gen, cell->position) = SKYBLUE;
 }
 
 void WaterUpdate(Generation *gen, Cell *cell) {
-  {
-    Position2 below_pos = ADD_POS(cell->position, ((Position2){0, 1}));
-    if (!IS_POS_VALID(gen->size, below_pos)) {
-      goto SLIDE;
+  int fall_count = FALL_BEFORE_RETURN;
+  for (int i = 0; i < LOOP_COUNT; i++) {
+    static Position2 possible_moves_arr[2][3] = {{{0, 1}, {-1, 1}, {-1, 0}},
+                                                 {{0, 1}, {1, 1}, {1, 0}}};
+    Position2 *possible_moves =
+        possible_moves_arr[CELL_DATA(cell, WaterStruct).sliding_right];
+    for (Position2 *move = possible_moves; move < possible_moves + 3; move++) {
+      Position2 cell_pos = ADD_POS(cell->position, (*move));
+      if (!IS_POS_VALID(gen->size, cell_pos)) {
+        continue;
+      }
+      Cell *other_cell = CELL(gen, cell_pos);
+      if (!fwater_swappable_particles[other_cell->type]) {
+        continue;
+      }
+      swap_cells(gen, cell, other_cell);
+      goto CHECK;
     }
-    Cell *other = CELL(gen, below_pos);
-    if (!water_swappable_particles[other->type]) {
-      goto SLIDE;
-    }
-    swap_cells(gen, cell, other);
-    *CELL_COLOR(gen, cell->position) = BLUE;
+    CELL_DATA(cell, WaterStruct).sliding_right =
+        !CELL_DATA(cell, WaterStruct).sliding_right;
+    *CELL_COLOR(gen, cell->position) = SKYBLUE;
     return;
-  }
 
-SLIDE:
-  static Position2 possible_slides[] = {{-1, 0}, {1, 0}};
-  Position2 slide_pos =
-      ADD_POS(cell->position,
-              possible_slides[CELL_DATA(cell, WaterStruct).sliding_right]);
-  if (!IS_POS_VALID(gen->size, slide_pos)) {
-    CELL_DATA(cell, WaterStruct).sliding_right =
-        !CELL_DATA(cell, WaterStruct).sliding_right;
-    return;
-  }
-  Cell *other = CELL(gen, slide_pos);
-  if (other->type == Water) {
-    if (CELL_DATA(cell, WaterStruct).sliding_right !=
-        CELL_DATA(other, WaterStruct).sliding_right) {
-      swap_cells(gen, cell, other);
-      *CELL_COLOR(gen, cell->position) = BLUE;
-    } else {
-      CELL_DATA(cell, WaterStruct).sliding_right =
-          !CELL_DATA(cell, WaterStruct).sliding_right;
+  CHECK:
+    Position2 bottom_pos = ADD_POS(cell->position, ((Position2){0, 1}));
+    if (!IS_POS_VALID(gen->size, bottom_pos)) {
+      *CELL_COLOR(gen, cell->position) = SKYBLUE;
+      return;
     }
-    return;
-  }
-  if (water_slideable_particles[other->type]) {
-    swap_cells(gen, cell, other);
-    *CELL_COLOR(gen, cell->position) = BLUE;
-  } else {
-    CELL_DATA(cell, WaterStruct).sliding_right =
-        !CELL_DATA(cell, WaterStruct).sliding_right;
+    Cell *bottom_cell = CELL(gen, bottom_pos);
+    if (bottom_cell->type != Water) {
+      if (fall_count != 0) {
+        fall_count--;
+        continue;
+      }
+      *CELL_COLOR(gen, cell->position) = SKYBLUE;
+      return;
+    }
   }
 }
 
-ADD_PARTICLE(Water);
+ADD_PARTICLE(Water)
