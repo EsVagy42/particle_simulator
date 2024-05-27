@@ -15,10 +15,10 @@ Generation generation;
 void UpdateDrawFrame();
 
 int main() {
-  const Size2 SIMULATOR_SIZE = {400, 300};
+  const Size2 SIMULATOR_SIZE = {300, 200};
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-  InitWindow(800, 600, "Particle Simulator V3");
+  InitWindow(600, 400, "Particle Simulator V3");
   generation = NEW(Generation, SIMULATOR_SIZE);
 
   HandleResize(&generation);
