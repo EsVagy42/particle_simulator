@@ -3,8 +3,8 @@
 
 enum Particles {
   Empty,
-  Sand,
   Wall,
+  Sand,
   Water,
 
   NUM_PARTICLES
