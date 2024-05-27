@@ -12,4 +12,38 @@ void update_gen(Generation *gen);
 
 void draw_gen(Generation *gen);
 
+#define TRY_SWAP(gen, cell, positions, valid_cells) \
+  { \
+    for (Position2 *_move = positions; _move < ARREND(positions); _move++) { \
+      Position2 _pos = ADD_POS(cell->position, (*_move)); \
+      if (!IS_POS_VALID(gen->size, _pos)) { \
+        continue;\
+      }\
+      Cell *_cell = CELL(gen, _pos);\
+      if (!valid_cells) {\
+        continue;\
+      }\
+      swap_cells(gen, cell, _cell);\
+      break; \
+    } \
+  }
+
+#define TRY_SWAP_RESULT(gen, cell, positions, valid_cells, result) \
+  { \
+    result = false; \
+    for (Position2 *_move = positions; _move < ARREND(positions); _move++) { \
+      Position2 _pos = ADD_POS(cell->position, (*_move)); \
+      if (!IS_POS_VALID(gen->size, _pos)) { \
+        continue;\
+      }\
+      Cell *_cell = CELL(gen, _pos);\
+      if (!valid_cells) {\
+        continue;\
+      }\
+      swap_cells(gen, cell, _cell);\
+      result = true; \
+      break; \
+    } \
+  }
+
 #endif
