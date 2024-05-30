@@ -1,6 +1,7 @@
 #include "simulator_structs.h"
 #include "indexing.h"
 #include "particles/particles.h"
+#include "properties.h"
 #include <raylib.h>
 #include <stdlib.h>
 
@@ -14,13 +15,16 @@ void InitGeneration(Generation *gen, Size2 size) {
 
   for (int i = 0; i < items; i++) {
     gen->cells[i] = (Cell){GET_POS(size, i), Empty, {}};
+    gen->cells[i].props = (Properties){.density = 0};
     gen->cell_position[i] = &gen->cells[i];
     gen->cell_colors[i] = BLACK;
   }
 }
 
 void CalculateCellGraphicalSize(Generation *gen, Size2 window_size) {
-  gen->cell_graphical_size = (Vector2){(float)window_size.width / gen->size.width, (float)window_size.height / gen->size.height};
+  gen->cell_graphical_size =
+      (Vector2){(float)window_size.width / gen->size.width,
+                (float)window_size.height / gen->size.height};
 }
 
 void DeleteGeneration(Generation *gen) {

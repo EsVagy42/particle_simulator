@@ -6,6 +6,7 @@ bool sand_swappable_particles[NUM_PARTICLES] = {[Empty] = true, [Water] = true};
 
 void SandInit(Generation *gen, Cell *cell) {
   cell->type = Sand;
+  cell->props = (Properties){.density = 10};
   *CELL_COLOR(gen, cell->position) = YELLOW;
 }
 
@@ -17,7 +18,7 @@ void SandUpdate(Generation *gen, Cell *cell) {
   bool polarity = GetRandomValue(0, 1);
   for (int i = 0; i < MAX_FALL; i++) {
     bool swap_success;
-    TRY_SWAP_RESULT(gen, cell, possible_moves[polarity],
+    TRY_DENSE_SWAP_RESULT(gen, cell, possible_moves[polarity],
                     sand_swappable_particles[_cell->type], swap_success);
 
     if (!swap_success) {

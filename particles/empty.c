@@ -5,6 +5,7 @@ CREATE_PARTICLE(Empty);
 
 void EmptyInit(Generation *gen, Cell *cell) {
   cell->type = Empty;
+  cell->props = (Properties){.density =  0};
   *CELL_COLOR(gen, cell->position) = BLACK;
 }
 

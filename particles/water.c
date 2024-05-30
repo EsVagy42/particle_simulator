@@ -3,7 +3,7 @@
 
 CREATE_PARTICLE(Water)
 
-bool water_swappable_particles[NUM_PARTICLES] = {[Empty] = true};
+bool water_swappable_particles[NUM_PARTICLES] = {[Empty] = true, [Sand] = true};
 const int LOOP_COUNT = 400;
 const int FALL_BEFORE_RETURN = 3;
 
@@ -14,6 +14,7 @@ CHECK_CELL_DATA_TYPE(WaterStruct);
 
 void WaterInit(Generation *gen, Cell *cell) {
   cell->type = Water;
+  cell->props = (Properties){.density = 2};
   CELL_DATA(cell, WaterStruct).sliding_right = GetRandomValue(0, 1);
   *CELL_COLOR(gen, cell->position) = SKYBLUE;
 }
@@ -24,7 +25,7 @@ void WaterUpdate(Generation *gen, Cell *cell) {
     static Position2 possible_moves_arr[2][3] = {{{0, 1}, {-1, 1}, {-1, 0}},
                                                  {{0, 1}, {1, 1}, {1, 0}}};
     bool swap_success;
-    TRY_SWAP_RESULT(
+    TRY_DENSE_SWAP_RESULT(
         gen, cell,
         possible_moves_arr[CELL_DATA(cell, WaterStruct).sliding_right],
         water_swappable_particles[_cell->type], swap_success);
@@ -42,7 +43,7 @@ void WaterUpdate(Generation *gen, Cell *cell) {
       return;
     }
     Cell *bottom_cell = CELL(gen, bottom_pos);
-    if (bottom_cell->type != Water) {
+    if (bottom_cell->type == Empty) {
       if (fall_count != 0) {
         fall_count--;
         continue;

@@ -3,11 +3,13 @@
 
 #include "cell_specific_data_size.h"
 #include "indexing.h"
+#include "properties.h"
 #include <assert.h>
 #include <raylib.h>
 typedef struct {
   Position2 position;
   int type;
+  Properties props;
   char data[CELL_DATA_SIZE];
 } Cell;
 
